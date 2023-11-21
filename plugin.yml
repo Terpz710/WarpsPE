@@ -1,0 +1,20 @@
+name: WarpsPE
+version: 1.0.0
+author: Terpz710
+main: Terpz710\WarpsPE\Main
+api: 5.0.0
+description: A Pocketmine-MP plugin that adds easy warp support into the server.
+
+permissions:
+  warpspe.warp:
+    description: Allows players to warp to specified locations.
+    default: true
+  warpspe.warps:
+    description: Allows players to list available warps.
+    default: true
+  warpspe.setwarp:
+    description: Allows players to set custom warp points.
+    default: op
+  warpspe.deletewarp:
+    description: Allows players to delete custom warp points.
+    default: op
