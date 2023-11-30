@@ -51,8 +51,22 @@ class WarpCommand extends Command implements PluginOwned {
                     $y = $warpData["y"];
                     $z = $warpData["z"];
 
-                    $sender->teleport($this->plugin->getServer()->getWorldManager()->getWorldByName($world)->getSpawnLocation()->setComponents($x, $y, $z));
-                    $sender->sendMessage("§l§aTeleported to warp §e{$warpName}§a");
+                    $worldManager = $this->plugin->getServer()->getWorldManager();
+
+                    if (!$worldManager->isWorldLoaded($worldName) && !$worldManager->loadWorld($worldName)) {
+                        $sender->sendMessage("§l§cFailed to load world§f: §e{$worldName}");
+                        return true;
+                    }
+
+                    $world = $worldManager->getWorldByName($worldName);
+                    if ($world === null) {
+                        $sender->sendMessage("§l§cWorld not found§f: §e{$worldName}");
+                        return true;
+                    }
+
+                    $position = new Position($x, $y, $z, $world);
+                    $sender->teleport($position);
+                    $sender->sendMessage("§l§aTeleported to warp §e{$warpName}");
                 } else {
                     $sender->sendMessage("§c§lWarp §e{$warpName}§c not found. Use §e/warps§c to see available warps");
                 }
