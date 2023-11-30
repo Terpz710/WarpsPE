@@ -10,6 +10,7 @@ use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\Plugin;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
+use pocketmine\world\Position;
 
 use Terpz710\WarpsPE\Main;
 
@@ -46,7 +47,7 @@ class WarpCommand extends Command implements PluginOwned {
 
                 if (isset($warps[$warpName])) {
                     $warpData = $warps[$warpName];
-                    $world = $warpData["world"];
+                    $worldName = $warpData["world"];
                     $x = $warpData["x"];
                     $y = $warpData["y"];
                     $z = $warpData["z"];
