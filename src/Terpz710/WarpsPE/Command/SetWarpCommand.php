@@ -7,7 +7,6 @@ namespace Terpz710\WarpsPE\Command;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\Plugin;
-use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginOwned;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
@@ -40,33 +39,18 @@ class SetWarpCommand extends Command implements PluginOwned {
                 $position = $sender->getPosition();
                 $world = $position->getWorld()->getFolderName();
 
-                $playerName = $sender->getName();
-                $playerWarps = $this->config->getNested("warpspe.$playerName", []);
+                $warpData = [
+                    "x" => $position->getX(),
+                    "y" => $position->getY(),
+                    "z" => $position->getZ(),
+                    "world" => $world,
+                    "permission" => "warpspe.warp.$warpName",
+                ];
 
-                if (isset($playerWarps[$warpName])) {
-                    $playerWarps[$warpName] = [
-                        "x" => $position->getX(),
-                        "y" => $position->getY(),
-                        "z" => $position->getZ(),
-                        "world" => $world,
-                        "permission" => "warpspe.warp.$warpName",
-                    ];
-                    $message = "§l§aWarp location §e{$warpName}§a updated";
-                } else {
-                    $playerWarps[$warpName] = [
-                        "x" => $position->getX(),
-                        "y" => $position->getY(),
-                        "z" => $position->getZ(),
-                        "world" => $world,
-                        "permission" => "warpspe.warp.$warpName",
-                    ];
-                    $message = "§l§aWarp location §e{$warpName}§a set";
-                }
-
-                $this->config->setNested("warpspe.$playerName", $playerWarps);
+                $this->config->setNested("warpspe.$warpName", $warpData);
                 $this->config->save();
 
-                $sender->sendMessage($message);
+                $sender->sendMessage("§l§aWarp location §e{$warpName}§a set");
             } else {
                 $sender->sendMessage("§l§cYou don't have permission to use this command");
             }
