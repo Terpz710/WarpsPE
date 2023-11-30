@@ -40,13 +40,12 @@ class WarpsCommand extends Command implements PluginOwned {
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
         if ($sender instanceof Player) {
             if ($sender->hasPermission("warpspe.warps")) {
-                $playerName = $sender->getName();
-                $playerWarps = $this->config->getNested("warpspe.$playerName", []);
+                $warps = $this->config->getAll()["warpspe"] ?? [];
 
-                if (empty($playerWarps)) {
-                    $sender->sendMessage("§c§lYou haven't set any warps. Use §e/setwarp [WarpName]§c to set a warp");
+                if (empty($warps)) {
+                    $sender->sendMessage("§c§lNo warps are set. Ask an admin to set some warps with §e/setwarp [WarpName]§c.");
                 } else {
-                    $warpList = implode("§f,§a ", array_keys($playerWarps));
+                    $warpList = implode("§f,§a ", array_keys($warps));
                     $sender->sendMessage("§l§aAvailable warps§f:§a {$warpList}");
                 }
             } else {
