@@ -25,7 +25,7 @@ class DeleteWarpCommand extends Command implements PluginOwned {
         parent::__construct(
             "deletewarp",
             "Delete a warp",
-            null,
+            "/deletewarp <WarpName>",
             ["delwarp"]
         );
         $this->config = $config;
@@ -40,19 +40,19 @@ class DeleteWarpCommand extends Command implements PluginOwned {
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
         if ($sender instanceof Player) {
             if ($sender->hasPermission("warpspe.deletewarp")) {
-                $warpName = strtolower($args[0] ?? "default");
-                $playerName = $sender->getName();
-                $playerWarps = $this->config->getNested("warpspe.$playerName", []);
+                $warpName = strtolower($args[0] ?? "");
 
-                if (isset($playerWarps[$warpName])) {
-                    unset($playerWarps[$warpName]);
+                $warps = $this->config->getAll()["warpspe"] ?? [];
 
-                    $this->config->setNested("warpspe.$playerName", $playerWarps);
+                if (isset($warps[$warpName])) {
+                    unset($warps[$warpName]);
+
+                    $this->config->setNested("warpspe", $warps);
                     $this->config->save();
 
                     $sender->sendMessage("§l§eWarp §c{$warpName}§e deleted");
                 } else {
-                    $sender->sendMessage("§c§lWarp §e{$warpName}§c not found. Use §e/warps§c to see your available warps");
+                    $sender->sendMessage("§c§lWarp §e{$warpName}§c not found. Use §e/warps§c to see available warps");
                 }
             } else {
                 $sender->sendMessage("§l§cYou don't have permission to use this command");
