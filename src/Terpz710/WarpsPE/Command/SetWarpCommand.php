@@ -6,8 +6,8 @@ namespace Terpz710\WarpsPE\Command;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
+use pocketmine\plugin\Plugin;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
 
@@ -47,12 +47,15 @@ class SetWarpCommand extends Command implements PluginOwned {
                     "permission" => "warpspe.warp.$warpName",
                 ];
 
-                $this->config->setNested("warpspe.$warpName", $warpData);
+                $warps = $this->config->getAll()["warpspe"] ?? [];
+                $warps[$warpName] = $warpData;
+
+                $this->config->setNested("warpspe", $warps);
                 $this->config->save();
 
-                $sender->sendMessage("§l§aWarp location §e{$warpName}§a set");
+                $sender->sendMessage("§aWarp location {$warpName} set");
             } else {
-                $sender->sendMessage("§l§cYou don't have permission to use this command");
+                $sender->sendMessage("§cYou don't have permission to use this command");
             }
         } else {
             $sender->sendMessage("This command can only be used by players.");
