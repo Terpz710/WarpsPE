@@ -15,8 +15,11 @@ use Terpz710\WarpsPE\Command\WarpsCommand;
 class Main extends PluginBase {
 
     public function onEnable(): void {
-        $this->saveDefaultConfig();
-        $config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
+        if (!is_dir($this->getDataFolder() . "warp")) {
+            @mkdir($this->getDataFolder() . "warp");
+        }
+
+        $config = new Config($this->getDataFolder() . "warp" . DIRECTORY_SEPARATOR . "warps.json", Config::JSON);
 
         $this->getServer()->getCommandMap()->register("warp", new WarpCommand($config, $this));
         $this->getServer()->getCommandMap()->register("warps", new WarpsCommand($config, $this));
