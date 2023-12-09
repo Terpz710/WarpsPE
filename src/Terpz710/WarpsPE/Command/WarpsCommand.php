@@ -43,13 +43,13 @@ class WarpsCommand extends Command implements PluginOwned {
                 $warps = $this->config->getAll()["warpspe"] ?? [];
 
                 if (empty($warps)) {
-                    $sender->sendMessage("§c§lNo warps are set. Ask an admin to set some warps with §e/setwarp [WarpName]§c.");
+                    $sender->sendMessage("§cNo warps are set. Ask an admin to set some warps with /setwarp [WarpName].");
                 } else {
-                    $warpList = implode("§f,§a ", array_keys($warps));
-                    $sender->sendMessage("§l§aAvailable warps§f:§a {$warpList}");
+                    $warpList = implode(", ", array_keys($warps));
+                    $sender->sendMessage("§aAvailable warps: {$warpList}");
                 }
             } else {
-                $sender->sendMessage("§c§lYou don't have permission to use this command");
+                $sender->sendMessage("§cYou don't have permission to use this command");
             }
         } else {
             $sender->sendMessage("This command can only be used by players.");
