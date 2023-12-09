@@ -50,12 +50,12 @@ class DeleteWarpCommand extends Command implements PluginOwned {
                     $this->config->setNested("warpspe", $warps);
                     $this->config->save();
 
-                    $sender->sendMessage("§l§eWarp §c{$warpName}§e deleted");
+                    $sender->sendMessage("§eWarp {$warpName} deleted");
                 } else {
-                    $sender->sendMessage("§c§lWarp §e{$warpName}§c not found. Use §e/warps§c to see available warps");
+                    $sender->sendMessage("§cWarp {$warpName} not found. Use /warps to see available warps");
                 }
             } else {
-                $sender->sendMessage("§l§cYou don't have permission to use this command");
+                $sender->sendMessage("§cYou don't have permission to use this command");
             }
         } else {
             $sender->sendMessage("This command can only be used by players.");
