@@ -55,24 +55,24 @@ class WarpCommand extends Command implements PluginOwned {
                     $worldManager = $this->plugin->getServer()->getWorldManager();
 
                     if (!$worldManager->isWorldLoaded($worldName) && !$worldManager->loadWorld($worldName)) {
-                        $sender->sendMessage("§l§cFailed to load world§f: §e{$worldName}");
+                        $sender->sendMessage("§cFailed to load world: {$worldName}");
                         return true;
                     }
 
                     $world = $worldManager->getWorldByName($worldName);
                     if ($world === null) {
-                        $sender->sendMessage("§l§cWorld not found§f: §e{$worldName}");
+                        $sender->sendMessage("§cWorld not found: {$worldName}");
                         return true;
                     }
 
                     $position = new Position($x, $y, $z, $world);
                     $sender->teleport($position);
-                    $sender->sendMessage("§l§aTeleported to warp §e{$warpName}");
+                    $sender->sendMessage("§aTeleported to warp: {$warpName}");
                 } else {
-                    $sender->sendMessage("§c§lWarp §e{$warpName}§c not found. Use §e/warps§c to see available warps");
+                    $sender->sendMessage("§cWarp not found. Use /warps to see available warps.");
                 }
             } else {
-                $sender->sendMessage("§c§lYou don't have permission to use this command");
+                $sender->sendMessage("§cYou don't have permission to use this command");
             }
         } else {
             $sender->sendMessage("This command can only be used by players.");
